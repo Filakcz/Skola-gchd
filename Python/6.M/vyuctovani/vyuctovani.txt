@@ -1,0 +1,6 @@
+adam|130
+pepa|220
+adam|35
+pepa|130
+jarda|250
+jasmina|300
