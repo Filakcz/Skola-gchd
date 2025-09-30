@@ -13,3 +13,5 @@ obj/
 *.nupkg
 *.snupkg
 *.nuspec
+
+*.csproj

@@ -99,7 +99,7 @@ class Program
           }
         }
 
-        // pokud uz dosli z leveho nebo praveho listu
+        // pokud uz dosli z leveho nebo praveho pole
         while (i < left.Length)
         {
             result[k] = left[i];
