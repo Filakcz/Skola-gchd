@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace uvod
+﻿namespace uvod
 { 
     internal class Program
 
