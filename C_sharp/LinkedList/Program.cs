@@ -6,7 +6,6 @@
         {
             LinkedList spojak = new LinkedList();
             spojak.AddMultiple(3,4,5,6,4);
-
             Console.Write("Linked list: ");
             spojak.Print();
 
@@ -32,7 +31,7 @@
             Console.WriteLine(spojak.IsThere(7));
 
             Console.WriteLine();
-           
+
             Console.Write("List 1: ");
             spojak.Print();
             Console.Write("List 2: ");
