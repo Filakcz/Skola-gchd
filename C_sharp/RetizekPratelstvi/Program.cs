@@ -4,6 +4,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        // casova slozitost O(n+m)
+        // pametova slozitost O(n+m)
         while (true){
             Console.Write("Pocet lidi: ");
             int n = Convert.ToInt32(Console.ReadLine());
@@ -17,8 +19,6 @@ class Program
             }
             string[] pairs = inputPairs.Split();
             
-            int[,] graph = new int[n,n];
-
             Console.Write("Od koho ke komu: ");
             string? inputPoints = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(inputPoints))
@@ -30,6 +30,12 @@ class Program
 
             int start = Convert.ToInt32(points[0]) - 1;
             int end = Convert.ToInt32(points[1]) - 1;
+            
+            List<List<int>> graph = new List<List<int>>(n);
+            for (int i = 0; i < n; i++)
+            {
+                graph.Add(new List<int>());
+            }
 
             for (int i = 0; i < pairs.Length; i++)
             {
@@ -37,22 +43,11 @@ class Program
                 int a = Convert.ToInt32(split[0]) - 1;
                 int b = Convert.ToInt32(split[1]) - 1;
 
-                graph[a,b] = 1;
-                graph[b,a] = 1;
+                graph[a].Add(b);
+                graph[b].Add(a);
             }
             
-            // printeni matice 
-            Console.WriteLine("Matice sousednosti: ");
-            for (int i = 0; i < graph.GetLength(0); i++)
-            {
-                for (int j = 0; j < graph.GetLength(1); j++)
-                {
-                    Console.Write(graph[i,j]);
-                }        
-                Console.WriteLine();
-            }
-
-            var path = BFS(graph, start, end, n);
+            var path = BFS(graph, start, end);
 
             if (path != null)
             {
@@ -67,35 +62,35 @@ class Program
         }
     }
 
-    static List<string>? BFS(int[,] graph, int start, int end, int n)
+    static List<string>? BFS(List<List<int>> graph, int start, int end)
     {
-        // lepsi by bylo Queue<int>, coz je rychlejsi na odebrani dle:
+        // lepsi je Queue<int>, coz je rychlejsi na odebrani dle:
         // https://stackoverflow.com/questions/10380692/queuet-vs-listt
-        List<int> queue = new List<int>();
+        int n = graph.Count;
+        Queue<int> queue = new Queue<int>();
         bool[] visited = new bool[n];
         int[] prev = new int[n];
         Array.Fill(prev,-1);
 
-        queue.Add(start);
+        queue.Enqueue(start);
         visited[start] = true;
 
         while (queue.Count > 0)
         {
-            int current = queue[0];
-            queue.RemoveAt(0);
+            int current = queue.Dequeue();
 
             if (current == end)
             {
                 break;
             }
 
-            for (int i = 0; i < n; i++)
+            foreach (int i in graph[current])
             {
-                if (graph[current, i] == 1 && !visited[i])
+                if (!visited[i])
                 {
                     visited[i] = true;
                     prev[i] = current;
-                    queue.Add(i);
+                    queue.Enqueue(i);
                 }
             }
         }
