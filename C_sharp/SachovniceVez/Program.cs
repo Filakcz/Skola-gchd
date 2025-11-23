@@ -5,6 +5,7 @@ class Program
     static void Main(string[] args)
     {
         char[,] board = new char[8,8];
+        int[] start = new int[2];
         
         for (int i = 0; i < 8; i++)
         {
@@ -15,23 +16,13 @@ class Program
                 if (a != null)
                 {
                     board[i,j] = a[j];
+                    if (a[j] == 'v')
+                    {
+                        start[0] = i;
+                        start[1] = j;
+                    }
                 }
             }
-        }
-
-        int[] start = new int[2];
-        for (int i = 0; i < 8; i++)
-        {
-            for (int j = 0; j < 8; j++)
-            {
-                Console.Write($" {board[i,j]} ");
-                if (board[i,j] == 'v')
-                {
-                    start[0] = i;
-                    start[1] = j;
-                }
-            }
-            Console.WriteLine();
         }
 
         int steps = BFS(board, start);
