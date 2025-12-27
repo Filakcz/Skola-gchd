@@ -53,7 +53,6 @@ class Program
         
         List<Hrana>[] graf = new List<Hrana>[pocetMest];
 
-
         for (int i = 0; i < pocetMest; i++)
         {
             graf[i] = new List<Hrana>();
@@ -99,6 +98,13 @@ class Program
             return;
         }
         string[] startCilParts = startCilStr.Split();
+
+        if (startCilParts.Length != 2)
+        {
+            Console.WriteLine("Neplatný vstup.");
+            return;
+        }
+
         if (!int.TryParse(startCilParts[0], out int start) || !int.TryParse(startCilParts[1], out int cil))
         {
             Console.WriteLine("Neplatný vstup.");
@@ -119,13 +125,15 @@ class Program
         // ,0 bez pouziti placeni
         // ,1 s placenim
         int[,] vzdalenost = new int[pocetMest,2];
-        int[,] predchozi = new int[pocetMest,2];
+        
+        // predchozi mesto, jeho stav 
+        (int,int)[,] predchozi = new (int,int)[pocetMest,2];
         for (int i = 0; i < pocetMest; i++)
         {
             vzdalenost[i,0] = int.MaxValue;
             vzdalenost[i,1] = int.MaxValue;
-            predchozi[i,0] = -1;
-            predchozi[i,1] = -1;
+            predchozi[i,0] = (-1,-1);
+            predchozi[i,1] = (-1,-1);
         }
 
         vzdalenost[start,0] = 0;
@@ -139,10 +147,10 @@ class Program
             (int uzel, int placeno) = pq.Dequeue();
  
             // delka silnice nemuze byt zaporna, takze muzeme ukoncit po nalezeni cile (?)
-            if (uzel == cil)
-            {
-                break;
-            }
+            // if (uzel == cil)
+            // {
+            //     break;
+            // }
 
             foreach (var hrana in graf[uzel])
             {
@@ -163,7 +171,7 @@ class Program
                 if (novaVzdalenost < vzdalenost[dalsiUzel, novePlaceno])
                 {
                     vzdalenost[dalsiUzel, novePlaceno] = novaVzdalenost;
-                    predchozi[dalsiUzel, novePlaceno] = uzel;
+                    predchozi[dalsiUzel, novePlaceno] = (uzel,placeno);
                     pq.Enqueue((dalsiUzel, novePlaceno), novaVzdalenost);
                 }
             }
@@ -193,25 +201,7 @@ class Program
         while (aktualni != -1)
         {
             cesta.Add(aktualni);
-
-            int pred = predchozi[aktualni, stav];
-
-            if (pred != -1)
-            {
-                foreach (var hrana in graf[pred])
-                {
-                    if (hrana.Cil == aktualni)
-                    {
-                        if (hrana.JePlacena && stav == 1)
-                        {
-                            stav = 0;
-                        }
-                        break;
-                    }
-                }
-            }
-
-            aktualni = pred;
+            (aktualni, stav) = predchozi[aktualni, stav];
         }
 
         cesta.Reverse();
