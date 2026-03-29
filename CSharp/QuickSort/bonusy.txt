@@ -1,0 +1,42 @@
+Bonus1:
+Vstup: pole o délce n
+1. Rozděl pole na skupiny po 5 prvcích a poslední o n mod 5 prvcích.
+2. Každou skupinu setřiď a najdi medián (3. prvek), který ulož do listu
+3. Rekurzivně zavolej algoritmus na list těchto n/5 mediánů -> pivot
+4. Rozděl pole podle pivotu a vyber část s větším počtem prvků
+5. Pro tuto část zavolej algoritmus znovu (rekurze)
+
+Bonus2:
+P(pivot je minimum) = 0
+
+Máme úsečku od 0 do 1 a hodíme na ni tři body.
+Aby se jeden stal mediánem a měl hodnotu x, tak se musí stát:
+1. Jeden bod na místě x (pravděpobonost 1)
+2. Jeden bod vlevo od x. Pravděpodobnost na to je x.
+3. Jeden bod vpravo od x. Pravděpodobnost = (1-x)
+Tyto tři body se mohou proházet (permutace), proto celou pravděpodobnost vynásobíme 3!.
+pravděpodobnost (y) = 6x(1-x)
+Po upravách na středový tvar se dostaneme k rovnici y = -6(x - 1/2 )^2 + 3/2 
+Toto je rovnice paraboly, kde přes integrál spočítame obsah od x = 1/4 do 3/4 (skoromedián).
+Bez integrálů můžeme udělat pouze odhad obsahu:
+Pro x = 1/4 a 3/4 -> y = 1,125
+Pro x = 1/2 -> y = 1,5
+Pokud uděláme obdelník pod parabolu na úseku od 1/4 do 3/4, tak má:
+Šířka = 3/4 - 1/4 = 1/2
+Výška = 1,125
+Tento obdelní leží celý pod parabolou, proto bude mít menší obsah než plocha pod parabolou v úseku od 1/4 do 3/4.
+obsah = 0,5 * 1,125 = 0,5625 -> 56,25 % 
+Takto jsme dokázali, že medián prvního, prostředního a posledního prvku je lepší než náhodný pivot (50 %).
+(Integrál vychází po úpravách 11/16, což je přibližně 68 %).
+
+Bonus3:
+Budeme volat rekurzi pouze na kratší část.
+Větší část uděláme přes iterování (vyřešíme později), takže zásobník nebudeme zatěžovat.
+
+
+Bonus4:
+Pokud posloupnost obsahuje extrémy.
+1,2,3,3,1000000
+Medián = 3
+Aritmetický průměr = 200001,8
+
