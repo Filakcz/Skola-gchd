@@ -11,13 +11,14 @@ P(pivot je minimum) = 0
 
 Máme úsečku od 0 do 1 a hodíme na ni tři body.
 Aby se jeden stal mediánem a měl hodnotu x, tak se musí stát:
-1. Jeden bod na místě x (pravděpobonost 1)
+1. Jeden bod na místě x
 2. Jeden bod vlevo od x. Pravděpodobnost na to je x.
 3. Jeden bod vpravo od x. Pravděpodobnost = (1-x)
 Tyto tři body se mohou proházet (permutace), proto celou pravděpodobnost vynásobíme 3!.
-pravděpodobnost (y) = 6x(1-x)
+Hustota pravděpodobnosti je y = 6x(1-x)
 Po upravách na středový tvar se dostaneme k rovnici y = -6(x - 1/2 )^2 + 3/2 
 Toto je rovnice paraboly, kde přes integrál spočítame obsah od x = 1/4 do 3/4 (skoromedián).
+Obsah pod křivkou je pravděpodobnost daného úseku. (Od 0 do 1 je obsah 1)
 Bez integrálů můžeme udělat pouze odhad obsahu:
 Pro x = 1/4 a 3/4 -> y = 1,125
 Pro x = 1/2 -> y = 1,5
@@ -27,7 +28,7 @@ Výška = 1,125
 Tento obdelní leží celý pod parabolou, proto bude mít menší obsah než plocha pod parabolou v úseku od 1/4 do 3/4.
 obsah = 0,5 * 1,125 = 0,5625 -> 56,25 % 
 Takto jsme dokázali, že medián prvního, prostředního a posledního prvku je lepší než náhodný pivot (50 %).
-(Integrál vychází po úpravách 11/16, což je přibližně 68 %).
+(Integrál vychází po úpravách 11/16, což je přibližně 68 %). Ověření lze najít na https://www.desmos.com/calculator/be5ne9vwi8
 
 Bonus3:
 Budeme volat rekurzi pouze na kratší část.
