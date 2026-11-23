@@ -8,17 +8,20 @@ namespace OOP_Arena
 {
     public class Kostka
     {
-
         private int pocetSten;
+        private Random rnd;
         public Kostka(int pocetSten)
         {
             this.pocetSten = pocetSten;
+            rnd = new Random();
         }
         public int HodSebou()
         {
-            Random rnd = new Random();
             return rnd.Next(1, pocetSten + 1);
         }
-        
+        // public void ZmenPocetSten(int PocetSten)
+        // {
+        //     pocetSten = PocetSten;
+        // }
     }
 }

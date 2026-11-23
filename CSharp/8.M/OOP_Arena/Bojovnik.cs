@@ -57,9 +57,21 @@ namespace OOP_Arena
             return (_zivot > 0);
         }
 
-        public virtual void Heal()
+        public virtual void Reset()
         {
             _zivot = _maxZivot;
+        }
+
+        public virtual void PeknyVypis()
+        {
+            Console.WriteLine("{0} {1}", _jmeno, VratGrafickyPekneZivoty());
+        }
+
+        public int PrijmiLeceni(int mnozstvi)
+        {
+            int vylecit = Math.Min(mnozstvi, _maxZivot - _zivot);
+            _zivot += vylecit;
+            return vylecit;
         }
 
         public string VratGrafickyPekneZivoty()
@@ -82,11 +94,16 @@ namespace OOP_Arena
         }
 
 
-        public virtual void Utoc(Bojovnik souper)
+        public virtual void Utoc(Bojovnik souper, Tym spojenci)
         {
             int uder = _utok + _kostka.HodSebou();
-            Zprava = $"{_jmeno} útočí s úderem za {uder} hp";
+            Zprava = $"{_jmeno} útočí s úderem za {uder} hp na {souper}";
             souper.BranSe(uder);
+        }
+
+        public void VymazZpravu()
+        {
+            Zprava = "";
         }
 
         public void BranSe(int uder)
